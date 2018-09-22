@@ -200,9 +200,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Add styled-components
 
-### `yarn add styled-components --dev'
-### `yarn add react-app-rewired --dev'
-### `yarn add react-app-rewire-styled-components --dev'
+### `yarn add styled-components --dev`
+### `yarn add react-app-rewired --dev`
+### `yarn add react-app-rewire-styled-components --dev`
 
 ## Supported Browsers
 
