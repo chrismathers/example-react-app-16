@@ -8,9 +8,6 @@ import Characters from '../components/Characters.js'
 import Tabs from '../components/Tabs.js'
 
 import axios from 'axios'
-//import Tabs from '../components/Tabs.js'
-
-//require('../assets/less/style.less')
 
 class Home extends React.Component {
     // not totally required for this class
