@@ -1,10 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import styled, { ThemeProvider } from 'styled-components'
 
 import IconC3po from './Icons/IconC3po.js';
 import IconVader from './Icons/IconVader.js';
 import IconBb8 from './Icons/IconBb8.js';
 import IconFett from './Icons/IconFett.js';
+
+const Panel = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 14px;
+  border-radius: 17px;
+  background-color: ${(props) => props.theme.panelColor};
+`
+
+const Input = styled.input`
+  background-color: ${(props) => props.theme.panelColor};
+`
+
+const Text = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-left: 12px;
+`
 
 class Characters extends React.Component {
     // not totally required for this class
@@ -16,33 +35,48 @@ class Characters extends React.Component {
         data: []
     }
 
-    state = {
-        data: this.props.data || []
+    constructor (props) {
+        super(props)
+
+        const theme = {
+            panelColor: 'blue'
+        }
+
+        this.theme = {
+            panelColor: 'white'
+        }
+
+        if (props.dark) {
+            this.theme.panelColor = '#fcff70'
+        }
     }
 
 
+    state = {
+        data: this.props.data || [],
+        themeStyle: this.props.themeStyle
+    }
 
-    render () {
+   render () {
 
         let current = this.props.currentTab;
 
         const characterDetails = this.props.data.map(function (character) {
              if (character.id === current) {
                 return (
-                    <div
-                        key={character.id}
-                        className='m_tabpanel'
+                    <Panel
                         id='panel-4'
                         aria-labelledby='tab-4'
                         aria-hidden='true'
                         role='tabpanel'
+                        key={character.id}
                     >
                         {characterIcon(character.id)}
-                        <div className='m_tabpanel_text' key={character.id}>
-                            <input type='text' value={character.name} />
+                        <Text className='m_tabpanel_text' key={character.id}>
+                            <Input type='text' value={character.name} />
                             <p>{character.description}</p>
-                        </div>
-                    </div>
+                        </Text>
+                    </Panel>
                 )
             }
         })
@@ -63,9 +97,11 @@ class Characters extends React.Component {
         }
 
         return (
-            <span>
-        {characterDetails}
-      </span>
+            <ThemeProvider theme={this.theme}>
+                <span>
+                    {characterDetails}
+                </span>
+            </ThemeProvider>
         )
     }
 }

@@ -29,8 +29,7 @@ class Tabs extends React.Component {
     }
 
     render () {
-        console.log('this.props.themeStyle ' + this.props.themeStyle)
-        console.log('this.props.data ' + this.props.data)
+
         return (
             <TabList role='tablist'>
                 {this.props.data.map(

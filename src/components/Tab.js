@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 
 const Item = styled.li`
-  background-color: ${props => (props.isCurrent ? props.theme.panelColor : '#eaeaea')};
+  background-color: ${props => (props.isCurrent ? props.theme.tabColor : '#eaeaea')};
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   padding: 8px 8px 5px 8px;
@@ -20,18 +20,17 @@ class Tab extends React.Component {
         this.handleClick = this.handleClick.bind(this)
 
         const theme = {
-            panelColor: 'white',
+            tabColor: 'white',
             color: '#1d6ab7'
         }
 
         this.theme = {
-            panelColor: 'white',
+            tabColor: 'white',
             color: 'black'
         }
 
         if (props.themeStyle === 'dark') {
-            this.theme.panelColor = 'black'
-            this.theme.color = 'white;'
+            this.theme.tabColor = '#fcff70'
         }
     }
 
