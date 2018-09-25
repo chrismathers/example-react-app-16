@@ -1,24 +1,27 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from "styled-components"
+import theme from "./theme.js"
 
 import PropTypes from 'prop-types'
-import IconC3po from '../components/Icons/IconC3po.js'
-import IconVader from '../components/Icons/IconVader.js'
-import IconBb8 from '../components/Icons/IconBb8.js'
-import IconFett from '../components/Icons/IconFett.js'
-import Characters from '../components/Characters.js'
-import Tabs from '../components/Tabs.js'
+import IconC3po from './Icons/IconC3po.js'
+import IconVader from './Icons/IconVader.js'
+import IconBb8 from './Icons/IconBb8.js'
+import IconFett from './Icons/IconFett.js'
+import Characters from './Characters.js'
+import Tabs from './Tabs.js'
 
 import axios from 'axios'
 
-const Panel = styled.div`
+const TabContent = styled.div`
     background-color: transparent;
     margin: 0 auto;
 `
 
 const Spacer = styled.p`
-  line-height: 2em;
-  display: inline-block;
+    line-height: 2em;
+    margin-bottom: 2em;
+    display: inline-block;
+    color: ${ props => props.dark ? props.theme.colors.panelColorDark : props.theme.colors.panelColor };
 `
 
 class Home extends React.Component {
@@ -38,14 +41,12 @@ class Home extends React.Component {
         tabText: '',
         characters: []
     }
+
     state = {
         currentTab: this.props.currentTab || 1
     }
 
     componentDidMount () {
-        //window.addEventListener('resize', this.updateDimensions)
-        //this.setState({ width: window.innerWidth })
-
         axios.get('/data/data.json')
             .then(res => {
                 this.setState({
@@ -53,7 +54,7 @@ class Home extends React.Component {
                 })
             })
             .catch(function (error) {
-                console.log("The Axios call went bad: " + error.res.data)
+                console.log("The Axios call returned this error: " + error.res.data)
             })
     }
 
@@ -66,16 +67,15 @@ class Home extends React.Component {
         const items = this.state.characters;
 
         return (
-
+            <ThemeProvider theme={theme}>
                 <div className='c_tabsSwitcher'>
                     <Tabs
                         currentTab={this.state.currentTab}
                         changeTab={this.changeTab}
                         data={items}
-                        themeStyle='light'
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
-                    <Panel>
+                    <TabContent>
                         {!this.state.goMobile
                             ? <Characters
                                 data={items}
@@ -87,18 +87,18 @@ class Home extends React.Component {
                                 <IconBb8 />
                                 <IconFett />
                             </span>}
-                    </Panel>
+                    </TabContent>
 
-                    <Spacer/>
+                    <Spacer>Default Theme</Spacer>
 
                     <Tabs
                         currentTab={this.state.currentTab}
                         changeTab={this.changeTab}
                         data={items}
-                        themeStyle='dark'
+                        dark
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
-                    <Panel>
+                    <TabContent>
                         {!this.state.goMobile
                             ? <Characters
                                 dark
@@ -111,8 +111,11 @@ class Home extends React.Component {
                                 <IconBb8 />
                                 <IconFett />
                             </span>}
-                    </Panel>
+                    </TabContent>
+
+                    <Spacer dark>Dark Theme</Spacer>
                 </div>
+            </ThemeProvider>
         )
     }
 }

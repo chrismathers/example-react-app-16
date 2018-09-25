@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
+import theme from './theme.js'
 
 const Item = styled.li`
-  background-color: ${props => (props.isCurrent ? props.theme.tabColor : '#eaeaea')};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  background-color: ${props => (props.isCurrent 
+        ? props => props.dark ? props.theme.colors.panelColorDark : props.theme.colors.panelColor
+        : props.theme.colors.tabColor
+    )};
+  border-top-left-radius: ${props => props.theme.units.tabBorderRadius};
+  border-top-right-radius: ${props => props.theme.units.tabBorderRadius};
   padding: 8px 8px 5px 8px;
   margin-left: 1px;
-  color: ${props => (props.isCurrent ? props.theme.color : '#1d6ab7')};
+  color: ${props => (props.isCurrent ? props.theme.colors.tabSelectedTextColor : props.theme.colors.tabTextColor)};
   font-weight: bold;
 `
 
@@ -15,23 +19,7 @@ class Tab extends React.Component {
     constructor (props) {
         super(props)
 
-        console.log(this.props.id);
-
         this.handleClick = this.handleClick.bind(this)
-
-        const theme = {
-            tabColor: 'white',
-            color: '#1d6ab7'
-        }
-
-        this.theme = {
-            tabColor: 'white',
-            color: 'black'
-        }
-
-        if (props.themeStyle === 'dark') {
-            this.theme.tabColor = '#fcff70'
-        }
     }
 
     handleClick (e) {
@@ -41,12 +29,13 @@ class Tab extends React.Component {
 
     render () {
         return (
-            <ThemeProvider theme={this.theme}>
+            <ThemeProvider theme={theme}>
                 <Item
                     aria-controls={'panel-' + this.props.id}
                     aria-selected='true'
                     role='tab'
                     isCurrent={this.props.isCurrent}
+                    dark={this.props.dark}
                 >
                     <a onClick={this.handleClick}>
                         {this.props.name}
