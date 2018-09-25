@@ -40,7 +40,7 @@ class Tabs extends React.Component {
                                 handleClick={this.handleClick.bind(this, tab)}
                                 name={tab.name}
                                 isCurrent={this.props.currentTab === tab.id}
-                                themeStyle={this.props.themeStyle}
+                                dark={this.props.dark}
                             />
                         )
                     }.bind(this)

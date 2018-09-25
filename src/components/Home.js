@@ -12,15 +12,16 @@ import Tabs from './Tabs.js'
 
 import axios from 'axios'
 
-const Panel = styled.div`
+const TabContent = styled.div`
     background-color: transparent;
     margin: 0 auto;
 `
 
 const Spacer = styled.p`
-  line-height: 2em;
-  display: inline-block;
-  color: ${ props => props.theme.colors.panelColor };
+    line-height: 2em;
+    margin-bottom: 2em;
+    display: inline-block;
+    color: ${ props => props.dark ? props.theme.colors.panelColorDark : props.theme.colors.panelColor };
 `
 
 class Home extends React.Component {
@@ -40,14 +41,12 @@ class Home extends React.Component {
         tabText: '',
         characters: []
     }
+
     state = {
         currentTab: this.props.currentTab || 1
     }
 
     componentDidMount () {
-        //window.addEventListener('resize', this.updateDimensions)
-        //this.setState({ width: window.innerWidth })
-
         axios.get('/data/data.json')
             .then(res => {
                 this.setState({
@@ -55,7 +54,7 @@ class Home extends React.Component {
                 })
             })
             .catch(function (error) {
-                console.log("The Axios call went bad: " + error.res.data)
+                console.log("The Axios call returned this error: " + error.res.data)
             })
     }
 
@@ -76,7 +75,7 @@ class Home extends React.Component {
                         data={items}
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
-                    <Panel>
+                    <TabContent>
                         {!this.state.goMobile
                             ? <Characters
                                 data={items}
@@ -88,9 +87,9 @@ class Home extends React.Component {
                                 <IconBb8 />
                                 <IconFett />
                             </span>}
-                    </Panel>
+                    </TabContent>
 
-                    <Spacer>test text</Spacer>
+                    <Spacer>Default Theme</Spacer>
 
                     <Tabs
                         currentTab={this.state.currentTab}
@@ -99,10 +98,10 @@ class Home extends React.Component {
                         dark
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
-                    <Panel>
+                    <TabContent>
                         {!this.state.goMobile
                             ? <Characters
-                                dark={this.state.dark}
+                                dark
                                 data={items}
                                 currentTab={this.state.currentTab}
                             />
@@ -112,7 +111,9 @@ class Home extends React.Component {
                                 <IconBb8 />
                                 <IconFett />
                             </span>}
-                    </Panel>
+                    </TabContent>
+
+                    <Spacer dark>Dark Theme</Spacer>
                 </div>
             </ThemeProvider>
         )
