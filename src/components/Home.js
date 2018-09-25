@@ -1,13 +1,14 @@
 import React from 'react'
-import styled from 'styled-components'
+import styled, { ThemeProvider } from "styled-components"
+import theme from "./theme.js"
 
 import PropTypes from 'prop-types'
-import IconC3po from '../components/Icons/IconC3po.js'
-import IconVader from '../components/Icons/IconVader.js'
-import IconBb8 from '../components/Icons/IconBb8.js'
-import IconFett from '../components/Icons/IconFett.js'
-import Characters from '../components/Characters.js'
-import Tabs from '../components/Tabs.js'
+import IconC3po from './Icons/IconC3po.js'
+import IconVader from './Icons/IconVader.js'
+import IconBb8 from './Icons/IconBb8.js'
+import IconFett from './Icons/IconFett.js'
+import Characters from './Characters.js'
+import Tabs from './Tabs.js'
 
 import axios from 'axios'
 
@@ -19,6 +20,7 @@ const Panel = styled.div`
 const Spacer = styled.p`
   line-height: 2em;
   display: inline-block;
+  color: ${ props => props.theme.colors.panelColor };
 `
 
 class Home extends React.Component {
@@ -66,13 +68,12 @@ class Home extends React.Component {
         const items = this.state.characters;
 
         return (
-
+            <ThemeProvider theme={theme}>
                 <div className='c_tabsSwitcher'>
                     <Tabs
                         currentTab={this.state.currentTab}
                         changeTab={this.changeTab}
                         data={items}
-                        themeStyle='light'
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
                     <Panel>
@@ -89,19 +90,19 @@ class Home extends React.Component {
                             </span>}
                     </Panel>
 
-                    <Spacer/>
+                    <Spacer>test text</Spacer>
 
                     <Tabs
                         currentTab={this.state.currentTab}
                         changeTab={this.changeTab}
                         data={items}
-                        themeStyle='dark'
+                        dark
                         className={this.state.goMobile ? 'nav--is-hidden' : ''}
                     />
                     <Panel>
                         {!this.state.goMobile
                             ? <Characters
-                                dark
+                                dark={this.state.dark}
                                 data={items}
                                 currentTab={this.state.currentTab}
                             />
@@ -113,6 +114,7 @@ class Home extends React.Component {
                             </span>}
                     </Panel>
                 </div>
+            </ThemeProvider>
         )
     }
 }

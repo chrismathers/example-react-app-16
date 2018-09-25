@@ -29,7 +29,7 @@ class Tab extends React.Component {
             color: 'black'
         }
 
-        if (props.themeStyle === 'dark') {
+        if (props.dark) {
             this.theme.tabColor = '#fcff70'
         }
     }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider } from "styled-components"
+import theme from "./theme.js"
 
 import IconC3po from './Icons/IconC3po.js';
 import IconVader from './Icons/IconVader.js';
@@ -12,11 +13,11 @@ const Panel = styled.div`
   flex-direction: row;
   padding: 14px;
   border-radius: 17px;
-  background-color: ${(props) => props.theme.panelColor};
+  background-color: ${ props => props.dark ? props.theme.colors.panelColorDark : props.theme.colors.panelColor };
 `
 
 const Input = styled.input`
-  background-color: ${(props) => props.theme.panelColor};
+  background-color: ${(props) => props.theme.colors.panelColor};
 `
 
 const Text = styled.div`
@@ -38,7 +39,7 @@ class Characters extends React.Component {
     constructor (props) {
         super(props)
 
-        const theme = {
+        /*const theme = {
             panelColor: 'blue'
         }
 
@@ -48,29 +49,29 @@ class Characters extends React.Component {
 
         if (props.dark) {
             this.theme.panelColor = '#fcff70'
-        }
+        }*/
+
     }
 
-
     state = {
-        data: this.props.data || [],
-        themeStyle: this.props.themeStyle
+        data: this.props.data || []
     }
 
    render () {
 
         let current = this.props.currentTab;
 
+        const characterIcon = (id) => ({
+           "1": <IconC3po />,
+           "2": <IconVader />,
+           "3": <IconBb8 />,
+           "4": <IconFett />
+        })[id]
+
         const characterDetails = this.props.data.map(function (character) {
              if (character.id === current) {
                 return (
-                    <Panel
-                        id='panel-4'
-                        aria-labelledby='tab-4'
-                        aria-hidden='true'
-                        role='tabpanel'
-                        key={character.id}
-                    >
+                    <Panel key={character.id}>
                         {characterIcon(character.id)}
                         <Text className='m_tabpanel_text' key={character.id}>
                             <Input type='text' value={character.name} />
@@ -81,23 +82,9 @@ class Characters extends React.Component {
             }
         })
 
-        function characterIcon (id) {
-            switch (id) {
-                case 1:
-                    return <IconC3po />
-                case 2:
-                    return <IconVader />
-                case 3:
-                    return <IconBb8 />
-                case 4:
-                    return <IconFett />
-                default:
-                    return <div>empty tab</div>
-            }
-        }
 
         return (
-            <ThemeProvider theme={this.theme}>
+            <ThemeProvider theme={theme}>
                 <span>
                     {characterDetails}
                 </span>
