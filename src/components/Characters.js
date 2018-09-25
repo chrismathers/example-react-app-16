@@ -53,8 +53,7 @@ class Characters extends React.Component {
 
 
     state = {
-        data: this.props.data || [],
-        themeStyle: this.props.themeStyle
+        data: this.props.data || []
     }
 
    render () {
