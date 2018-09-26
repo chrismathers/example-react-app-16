@@ -12,8 +12,10 @@ my-app/
   public/
     index.html
     favicon.ico
+    data.json
+    manifest.json
   src/
-    App.css
+    /components
     App.js
     App.test.js
     index.css
