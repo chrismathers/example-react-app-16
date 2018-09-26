@@ -47,14 +47,14 @@ class Home extends React.Component {
     }
 
     componentDidMount () {
-        axios.get('/data/data.json')
+        axios.get('data.json')
             .then(res => {
                 this.setState({
                     characters: res.data
                 })
             })
             .catch(function (error) {
-                console.log("The Axios call returned this error: " + error.res.data)
+                console.log("The Axios call returned this error: " + error)
             })
     }
 
